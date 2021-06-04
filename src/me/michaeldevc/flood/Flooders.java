@@ -277,7 +277,7 @@ public class Flooders {
                 out.write(0);
             }
         });
-        this.flooders.put("Extreme5", (out, host, port) -> {
+        this.flooders.put("extreme5", (out, host, port) -> {
             out.write(624);
             out.write(15);
             out.write(565);

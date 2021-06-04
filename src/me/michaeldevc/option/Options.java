@@ -30,12 +30,12 @@ public class Options {
                 if (part.length > 1) {
                     Object value = part[1];
                     try {
-                        value = Integer.valueOf(Integer.parseInt((String)value));
-                    } catch (Exception exception) {}
+                        value = Integer.parseInt((String) value);
+                    } catch (Exception ignored) {}
                     if ((value instanceof String && value.equals("true")) || value.equals("false"))
                         try {
-                            value = Boolean.valueOf(Boolean.parseBoolean((String)value));
-                        } catch (Exception exception) {}
+                            value = Boolean.parseBoolean((String) value);
+                        } catch (Exception ignored) {}
                     options.options.put(part[0].replace("=", ""), value);
                 }
                 b++;

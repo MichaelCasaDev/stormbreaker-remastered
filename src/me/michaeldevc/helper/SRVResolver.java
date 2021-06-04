@@ -12,7 +12,7 @@ public class SRVResolver {
     private static final DirContext srvContext;
 
     static {
-        Hashtable<String, String> env = new Hashtable();
+        Hashtable env = new Hashtable();
         env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
         env.put("java.naming.provider.url", "dns:");
 
@@ -34,12 +34,10 @@ public class SRVResolver {
                 if (attrib != null) {
                     Object obj = attrib.get(0);
                     String[] array = obj.toString().split(" ");
-                    if (obj != null) {
-                        return array[3].substring(0, array[3].length() - 1) + ":" + array[2];
-                    }
+                    return array[3].substring(0, array[3].length() - 1) + ":" + array[2];
                 }
             }
-        } catch (Exception var6) {
+        } catch (Exception ignored) {
         }
 
         return "";

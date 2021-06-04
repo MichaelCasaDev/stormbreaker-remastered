@@ -7,12 +7,11 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Proxies {
-    private final List<Proxy> proxies = new ArrayList();
+    private final ArrayList proxies = new ArrayList();
     private int index = 0;
 
     public Proxies() {
@@ -43,7 +42,7 @@ public class Proxies {
 
                 try {
                     port = Integer.parseInt(ip[1]);
-                } catch (NumberFormatException var10) {
+                } catch (NumberFormatException ignored) {
                 }
 
                 Proxy proxy = new Proxy(type, new InetSocketAddress(hostname, port));
