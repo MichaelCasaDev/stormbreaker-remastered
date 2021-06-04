@@ -1,2 +1,2 @@
-# stormbreaker-remaster
- A minecraft server flooder made in JAVA!
+# Stormbreaker Remastered!
+A Minecraft server flooder made in JAVA!
