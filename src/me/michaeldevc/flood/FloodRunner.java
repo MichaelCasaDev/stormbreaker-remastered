@@ -117,7 +117,7 @@ public class FloodRunner {
         })).start();
 
         ExecutorService executorService = Executors.newFixedThreadPool(threads);
-        System.out.format("%sStarted attack! %s:%s, flooder: %s, threads: %s, attack: %s%s", ConsoleCoders.ANSI_GREEN, host, port, floodName, threads, attackTime, ConsoleCoders.ANSI_RESET);
+        System.out.format("%sStarted attack! %s%s:%s, flooder: %s, threads: %s, attack: %s%s", ConsoleCoders.ANSI_GREEN, ConsoleCoders.ANSI_RESET, host, port, floodName, threads, attackTime, ConsoleCoders.ANSI_RESET);
 
         this.maxConnections = threads * connections;
         String finalServerName = host;
